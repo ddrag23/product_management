@@ -1,4 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-def index():
-    return HttpResponse("Hello product")
+from django.http import HttpResponse, HttpRequest
+
+
+def index(request: HttpRequest):
+    return render(request, "main.html", {})
