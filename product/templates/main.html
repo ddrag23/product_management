@@ -1,9 +1,81 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Produk
+Produk
 {% endblock %}
 
 {% block content %}
-    <p>hello word</p>
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <p>Daftar Produk</p>
+            <a href="{% url 'product.store' %}" class="btn btn-primary">Tambah Produk</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex mb-3 gap-3">
+            <button id="bisa-dijual" data-status="bisa dijual" class="btn btn-success">
+                Tampilkan Produk Bisa Dijual
+            </button>
+            <button id="tidak-bisa-dijual" data-status="tidak bisa dijual" class="btn btn-warning">
+                Tampilkan Produk Tidak Bisa Dijual
+            </button>
+            <button id="reset" class="btn btn-secondary" style="display:none;">
+                Reset Filter
+            </button>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nomor</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Kategori</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody id="tb-product">
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    async function loadProduct(params = '') {
+        if (params) {
+            document.getElementById('reset').style.display = 'block'
+        } else {
+            document.getElementById('reset').style.display = 'none'
+
+        }
+        const json = await fetch(`/api/products${params}`)
+        const data = await json.json()
+        const tbBody = document.getElementById("tb-product")
+        tbBody.innerHTML = render(data)
+    }
+    function render(products) {
+        let html = '';
+        let i = 0;
+        products.forEach(data => {
+            const segment = `
+        <tr>
+            <td>${data.nomor}</td>
+            <td>${data.nama_product}</td>
+            <td>${data.harga}</td>
+            <td>${data.kategori}</td>
+            <td>${data.status}</td>
+        </tr>
+        `
+            html += segment
+        });
+        return html
+    }
+    ['bisa-dijual', 'tidak-bisa-dijual', 'reset'].forEach((el) => {
+        document.getElementById(el).addEventListener('click', async function (e) {
+            await loadProduct(el == 'reset' ? '' : `?status=${e.target.dataset.status}`)
+        })
+    })
+    document.addEventListener("DOMContentLoaded", function () {
+        loadProduct()
+    });
+</script>
 {% endblock %}

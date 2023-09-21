@@ -31,7 +31,7 @@ def insert_status(conn: connect, payload: list[any]):
 
 def insert_product(conn: connect, payload: list[any]):
     conn.execute(
-        "insert into product_product (id_product,nama_product,harga,id_kategori_id,id_status_id,nomor) values (%s,%s,%s,%s,%s,%s) returning id_product", payload)
+        "insert into product_product (id_product,nama_product,harga,kategori_id,status_id,nomor) values (%s,%s,%s,%s,%s,%s) returning id_product", payload)
     return conn.fetchone()
 
 
