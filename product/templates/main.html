@@ -9,7 +9,10 @@ Produk
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <p>Daftar Produk</p>
-            <a href="{% url 'product.store' %}" class="btn btn-primary">Tambah Produk</a>
+            <button type="button" class="btn btn-primary" id="add-product">
+                Tambah Produk
+            </button>
+
         </div>
     </div>
     <div class="card-body">
@@ -32,50 +35,89 @@ Produk
                     <th scope="col">Harga</th>
                     <th scope="col">Kategori</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody id="tb-product">
             </tbody>
         </table>
+        <div class="d-flex justify-content-end">
+            <nav aria-label="Page navigation example" id="paginationNav">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+
+        </div>
     </div>
 </div>
-<script>
-    async function loadProduct(params = '') {
-        if (params) {
-            document.getElementById('reset').style.display = 'block'
-        } else {
-            document.getElementById('reset').style.display = 'none'
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" id="product-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        {% csrf_token %}
+                        <label for="nama_product" class="form-label">Nama Produk</label>
+                        <input type="text" class="form-control" id="nama_product" name="nama_product"
+                            placeholder="Masukkan nama product">
+                        <div class="nama_product"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_product" class="form-label">Product Identity</label>
+                        <input type="number" class="form-control" id="id_product" name="id_product"
+                            placeholder="Masukkan Product Identity product">
+                        <div class="id_product"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nomor" class="form-label">Nomor Produk</label>
+                        <input type="text" class="form-control" id="nomor" name="nomor"
+                            placeholder="Masukkan nomor product">
+                        <div class="nomor"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="harga" class="form-label">Harga Produk</label>
+                        <input type="text" class="form-control" id="harga" name="harga"
+                            placeholder="Masukkan harga product">
+                        <div class="harga"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="kategori_id" class="form-label">Kategori Produk</label>
+                        <select class="form-select" id="kategori_id" name="kategori_id"
+                            aria-label="Default select example">
+                            <option selected>--Pilih--</option>
+                            {% for item in satuan %}
+                            <option value="{{ item.id_satuan }}">{{ item.nama_satuan }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="kategori_id"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status_id" class="form-label">Status Produk</label>
+                        <select class="form-select" id="status_id" name="status_id" aria-label="Default select example">
+                            <option selected>--Pilih--</option>
+                            {% for item in status %}
+                            <option value="{{ item.id_status }}">{{ item.nama_status }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="status_id"></div>
 
-        }
-        const json = await fetch(`/api/products${params}`)
-        const data = await json.json()
-        const tbBody = document.getElementById("tb-product")
-        tbBody.innerHTML = render(data)
-    }
-    function render(products) {
-        let html = '';
-        let i = 0;
-        products.forEach(data => {
-            const segment = `
-        <tr>
-            <td>${data.nomor}</td>
-            <td>${data.nama_product}</td>
-            <td>${data.harga}</td>
-            <td>${data.kategori}</td>
-            <td>${data.status}</td>
-        </tr>
-        `
-            html += segment
-        });
-        return html
-    }
-    ['bisa-dijual', 'tidak-bisa-dijual', 'reset'].forEach((el) => {
-        document.getElementById(el).addEventListener('click', async function (e) {
-            await loadProduct(el == 'reset' ? '' : `?status=${e.target.dataset.status}`)
-        })
-    })
-    document.addEventListener("DOMContentLoaded", function () {
-        loadProduct()
-    });
-</script>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-product">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<script src="{% static 'js/product.js' %}"></script>
 {% endblock %}
