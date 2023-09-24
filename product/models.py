@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 
@@ -22,3 +21,5 @@ class Product(models.Model):
         to=Satuan, related_name="kategori", on_delete=models.CASCADE, null=True)
     status = models.OneToOneField(
         to=Status, related_name="status", on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
