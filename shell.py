@@ -3,6 +3,8 @@ from datetime import date, datetime
 from requests import post
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 from psycopg2 import connect
+import pytz
+import datetime
 
 
 def find_satuan_by_name(conn: connect, nama_satuan: list):
@@ -31,7 +33,7 @@ def insert_status(conn: connect, payload: list[any]):
 
 def insert_product(conn: connect, payload: list[any]):
     conn.execute(
-        "insert into product_product (id_product,nama_product,harga,kategori_id,status_id,nomor) values (%s,%s,%s,%s,%s,%s) returning id_product", payload)
+        "insert into product_product (id_product,nama_product,harga,kategori_id,status_id,nomor,created_at,updated_at) values (%s,%s,%s,%s,%s,%s,%s,%s) returning id_product", payload)
     return conn.fetchone()
 
 
@@ -70,6 +72,8 @@ def run_shell():
     conn = connect(
         "dbname=product_management user=postgres password=1 host=localhost port=5432")
     cursor = conn.cursor()
+    utc = pytz.utc
+    utc_now = datetime.datetime.now(tz=utc)
     if result['error'] == 1:
         print("error")
         return
@@ -79,7 +83,7 @@ def run_shell():
             satuan_id = get_satuan_id(cursor, i['kategori'])
             status_id = get_status_id(cursor, i['status'])
             product = insert_product(
-                cursor, [i['id_produk'], i['nama_produk'], i['harga'], satuan_id, status_id, i['no']])
+                cursor, [i['id_produk'], i['nama_produk'], i['harga'], satuan_id, status_id, i['no'], utc_now, utc_now])
             conn.commit()
             print(product)
 
