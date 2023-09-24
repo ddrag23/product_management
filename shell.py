@@ -4,6 +4,7 @@ from requests import post
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 from psycopg2 import connect
 import pytz
+import json
 
 
 def find_satuan_by_name(conn: connect, nama_satuan: list):
@@ -73,18 +74,19 @@ def run_shell():
     cursor = conn.cursor()
     utc = pytz.utc
     utc_now = datetime.now(tz=utc)
+    data = None
     if result['error'] == 1:
-        print("error")
-        return
+        open_file = open('data-product.json')
+        data = json.load(open_file)
     else:
         data = result['data']
-        for i in data:
-            satuan_id = get_satuan_id(cursor, i['kategori'])
-            status_id = get_status_id(cursor, i['status'])
-            product = insert_product(
-                cursor, [i['id_produk'], i['nama_produk'], i['harga'], satuan_id, status_id, i['no'], utc_now, utc_now])
-            conn.commit()
-            print(product)
+    for i in data:
+        satuan_id = get_satuan_id(cursor, i['kategori'])
+        status_id = get_status_id(cursor, i['status'])
+        product = insert_product(
+            cursor, [i['id_produk'], i['nama_produk'], i['harga'], satuan_id, status_id, i['no'], utc_now, utc_now])
+        conn.commit()
+        print(product)
 
     cursor.close()
     conn.close()
