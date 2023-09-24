@@ -58,7 +58,7 @@ source env/bin/activate
 ```bash
 pip install -r requirement.txt
 ```
-- setting your credential database in settings.py
+- setting your credential database in settings.py and shell.py
 - then run migration
 ```bash
 python manage.py makemigrations && python manage.py migrate
@@ -79,3 +79,4 @@ python manage.py runserver
 - for requirement library above you can look via requirement.txt file or you can manually install following requirement in above
 - for the url used for access this site. it doesn't have to be port 8000  you can setting manually or you can look in your terminal when running runserver
 - here i'm just use python 3.11.x, in my local machine there no orther python versions like python version 2.x.x. if your local machine have python 2.x.x. you can try running python3 or according to your machine's local settings
+- Please make sure there is internet available to get product data and the Sweetalert library
