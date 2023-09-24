@@ -85,6 +85,7 @@ async function edit(e) {
         fields.forEach(item => {
             document.getElementById(item).value = data[item]
         })
+        document.getElementById("id_product").readOnly = true
         modal.show()
     }
 }
