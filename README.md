@@ -8,13 +8,27 @@
   - postgresql
   - browser (chrome or mozilla)
 - Libary
-  - Django              4.2.5
-  - django-bootstrap-v5 1.0.11
-  - djangorestframework 3.14.0
-  - psycopg2            2.9.7
-  - requests            2.31.0
-  - virtualenv          20.24.5
-  - requests-toolbelt   1.0.0
+    - asgiref==3.7.2
+    - beautifulsoup4==4.12.2
+    - certifi==2023.7.22
+    - charset-normalizer==3.2.0
+    - distlib==0.3.7
+    - Django==4.2.5
+    - django-bootstrap-v5==1.0.11
+    - djangorestframework==3.14.0
+    - filelock==3.12.4
+    - idna==3.4
+    - platformdirs==3.10.0
+    - psycopg2==2.9.7
+    - pytz==2023.3.post1
+    - requests==2.31.0
+    - requests-toolbelt==1.0.0
+    - soupsieve==2.5
+    - sqlparse==0.4.4
+    - tzdata==2023.3
+    - urllib3==2.0.5
+    - virtualenv==20.24.5
+
 
 ### How to install
 
