@@ -31,15 +31,37 @@
 
 
 ### How to install
-
+- clone this repository using ssh or https
+```bash
+git clone git@github.com:ddrag23/product_management.git
+```
+```bash
+git clone https://github.com/ddrag23/product_management.git
+```
+- go to directory project, if you using linux. you can do it:
+```bash
+cd <yout-path>/<project-path>
+```
+- setting venv (optional)
+```bash
+python -m venv <your-name-env>
+```
+- activate venv, if you using linux or mac you can do it : (optional)
+```bash
+source env/bin/activate
+```
+- if you using windows. you can do it
+```bash
+.\env\Scripts\activate
+```
 - install library
 ```bash
-pip install requirement.txt
+pip install -r requirement.txt
 ```
 - setting your credential database in settings.py
 - then run migration
 ```bash
-python manage.py makemigration && python manage.py migrate
+python manage.py makemigrations && python manage.py migrate
 ```
 - after success migration table. then running shell.py for initial data product from service api
 ```bash
