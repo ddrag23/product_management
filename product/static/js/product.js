@@ -70,6 +70,7 @@ async function showModal(e) {
     const modalToggle = document.getElementById('exampleModal') // relatedTarget
     const modal = bootstrap.Modal.getOrCreateInstance(modalToggle)
     clearForm()
+    document.getElementById("id_product").readOnly = false
     localStorage.setItem('is_edit', 0)
     modal.show()
 }
