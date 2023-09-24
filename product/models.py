@@ -17,9 +17,9 @@ class Product(models.Model):
     nomor = models.IntegerField(null=True)
     nama_product = models.CharField(max_length=255)
     harga = models.CharField()
-    kategori = models.OneToOneField(
-        to=Satuan, related_name="kategori", on_delete=models.CASCADE, null=True)
-    status = models.OneToOneField(
-        to=Status, related_name="status", on_delete=models.CASCADE, null=True)
+    kategori = models.ForeignKey(
+        to=Satuan, related_name="kategori", on_delete=models.CASCADE)
+    status = models.ForeignKey(
+        to=Status, related_name="status", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
