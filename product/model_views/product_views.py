@@ -14,5 +14,5 @@ class ProductViewSet(ModelViewSet):
             'kategori', 'status')
         params = self.request.GET.get('status', None)
         if params:
-            return data.filter(status__nama_status=params).all()
-        return data.all()
+            return data.filter(status__nama_status=params).all().order_by('created_at')
+        return data.all().order_by('created_at')
