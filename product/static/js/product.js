@@ -213,6 +213,7 @@ async function submit(e) {
         if ([201, 200].includes(response.status)) {
             onAlert("success", "Data produk berhasil disimpan")
             modal.hide()
+            loadProduct()
             clearForm()
         }
     } catch (error) {
