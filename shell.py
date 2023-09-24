@@ -4,7 +4,6 @@ from requests import post
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 from psycopg2 import connect
 import pytz
-import datetime
 
 
 def find_satuan_by_name(conn: connect, nama_satuan: list):
@@ -73,7 +72,7 @@ def run_shell():
         "dbname=product_management user=postgres password=1 host=localhost port=5432")
     cursor = conn.cursor()
     utc = pytz.utc
-    utc_now = datetime.datetime.now(tz=utc)
+    utc_now = datetime.now(tz=utc)
     if result['error'] == 1:
         print("error")
         return
